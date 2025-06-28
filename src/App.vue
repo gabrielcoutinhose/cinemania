@@ -1,5 +1,14 @@
-<script setup></script>
+<template>
+  <div id="app">
+    <router-view />
+  </div>
+</template>
 
-<template></template>
+<script>
+import Header from "@/components/Header.vue";
+import Main from "@/components/Main.vue";
 
-<style scoped></style>
+export default {
+  components: { Header, Main },
+};
+</script>
