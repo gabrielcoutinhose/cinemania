@@ -3,33 +3,31 @@
     <img :src="imageUrl" :alt="movie.title || 'Capa do filme'" />
     <h3 class="title">{{ movie.title }}</h3>
     <div class="actions">
-      <button @click.stop="$emit('addToFavorites')" aria-label="Adicionar aos favoritos">
+      <button @click="$emit('add-to-favorites')" aria-label="Adicionar aos favoritos">
         <font-awesome-icon icon="heart" />
       </button>
-      <button @click.stop="$emit('addToCart')" aria-label="Adicionar ao carrinho">
+      <button @click="$emit('add-to-cart')" aria-label="Adicionar ao carrinho">
         <font-awesome-icon icon="shopping-cart" />
       </button>
     </div>
   </div>
 </template>
 
-<script>
-export default {
-  name: "MovieCard",
-  props: {
-    movie: {
-      type: Object,
-      required: true,
-    },
+<script setup>
+import { computed } from "vue";
+
+defineProps({
+  movie: {
+    type: Object,
+    required: true,
   },
-  computed: {
-    imageUrl() {
-      return this.movie.poster_path
-        ? `https://image.tmdb.org/t/p/w500${this.movie.poster_path}`
-        : require("@/assets/fallback-poster.jpg");
-    },
-  },
-};
+});
+
+const imageUrl = computed(() =>
+  props.movie.poster_path
+    ? `https://image.tmdb.org/t/p/w500${props.movie.poster_path}`
+    : new URL("@/assets/fallback-poster.jpg", import.meta.url).href
+);
 </script>
 
 <style lang="scss" scoped>
@@ -73,7 +71,7 @@ export default {
       color: white;
       font-size: 1.2rem;
       cursor: pointer;
-      transition: transform 0.2s ease;
+      transition: transform 0.2s, color 0.2s;
 
       &:hover {
         transform: scale(1.2);
@@ -85,10 +83,8 @@ export default {
       }
     }
   }
-}
 
-@media (max-width: 480px) {
-  .card {
+  @media (max-width: 480px) {
     padding: 0.5rem;
   }
 }

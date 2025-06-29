@@ -1,16 +1,16 @@
 import { createApp } from "vue";
 import App from "./App.vue";
 import router from "./router";
+import store from "./store";
 
-import { library } from "@fortawesome/fontawesome-svg-core";
-import { faHeart, faShoppingCart, faSearch, faTrash } from "@fortawesome/free-solid-svg-icons";
-import { FontAwesomeIcon } from "@fortawesome/vue-fontawesome";
-
-library.add(faHeart, faShoppingCart, faSearch, faTrash);
+import { installFontAwesome } from "@/plugins/fontawesome";
+import { installVueMask } from "@/plugins/mask";
 
 const app = createApp(App);
 
-app.use(router);
-app.component("font-awesome-icon", FontAwesomeIcon);
+installFontAwesome(app);
+installVueMask(app);
 
+app.use(router);
+app.use(store);
 app.mount("#app");

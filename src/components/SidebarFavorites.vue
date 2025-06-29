@@ -13,18 +13,13 @@
   </aside>
 </template>
 
-<script>
-import { mapState, mapActions } from "vuex";
+<script setup>
+import { computed } from "vue";
+import { useStore } from "vuex";
 
-export default {
-  name: "SidebarFavorites",
-  computed: {
-    ...mapState(["favorites"]),
-  },
-  methods: {
-    ...mapActions(["toggleFavorite"]),
-  },
-};
+const store = useStore();
+const favorites = computed(() => store.state.favorites);
+const toggleFavorite = (movie) => store.dispatch("toggleFavorite", movie);
 </script>
 
 <style lang="scss" scoped>
@@ -34,7 +29,7 @@ export default {
   color: white;
   padding: 1.5rem;
   position: fixed;
-  right: 0;
+  left: 0;
   top: 0;
   height: 100%;
   overflow-y: auto;
@@ -49,48 +44,47 @@ export default {
   ul {
     list-style: none;
     padding: 0;
-    flex: 1 1 auto;
+    flex: 1;
     overflow-y: auto;
-  }
 
-  li {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    margin-bottom: 1rem;
+    li {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 1rem;
 
-    button {
-      background: transparent;
-      border: none;
-      color: #f44336;
-      cursor: pointer;
-      font-size: 1.2rem;
-      padding: 0.2rem 0.5rem;
-      border-radius: 4px;
-      transition: background 0.2s ease;
+      button {
+        background: transparent;
+        border: none;
+        color: #f44336;
+        cursor: pointer;
+        font-size: 1.2rem;
+        padding: 0.2rem 0.5rem;
+        border-radius: 4px;
+        transition: background 0.2s;
 
-      &:hover {
-        background: rgba(244, 67, 54, 0.2);
+        &:hover {
+          background: rgba(244, 67, 54, 0.2);
+        }
       }
     }
   }
 
   .close {
-    margin-top: 2rem;
+    margin-top: 1rem;
     background: #444;
     border: none;
     color: white;
     padding: 0.5rem 1rem;
     cursor: pointer;
     border-radius: 4px;
+    width: 100%;
   }
-}
 
-@media (max-width: 768px) {
-  .sidebar {
+  @media (max-width: 768px) {
     position: fixed;
     bottom: 0;
-    right: 0;
+    left: 0;
     width: 100%;
     height: 50vh;
     border-radius: 12px 12px 0 0;

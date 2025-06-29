@@ -1,46 +1,20 @@
 <template>
   <div class="main-container" :class="{ 'sidebar-open': showFavorites || showCart }">
     <Header />
-
     <Movies />
-
     <SidebarFavorites v-if="showFavorites" @close="toggleFavorites" class="sidebar favorites" />
-
-    <SidebarCart
-      v-if="showCart"
-      @close="toggleCart"
-      @go-checkout="goCheckout"
-      class="sidebar cart"
-    />
+    <SidebarCart v-if="showCart" @close="toggleCart" @go-checkout="goCheckout" class="sidebar cart" />
   </div>
 </template>
 
 <script setup>
-import { ref } from "vue";
-import { useRouter } from "vue-router";
 import Header from "@/components/Header.vue";
 import Movies from "@/components/Movies.vue";
 import SidebarFavorites from "@/components/SidebarFavorites.vue";
 import SidebarCart from "@/components/SidebarCart.vue";
+import { useHomeViewModel } from "@/viewmodels/HomeViewModel";
 
-const router = useRouter();
-const showFavorites = ref(false);
-const showCart = ref(false);
-
-function toggleFavorites() {
-  if (!showFavorites.value && showCart.value) showCart.value = false;
-  showFavorites.value = !showFavorites.value;
-}
-
-function toggleCart() {
-  if (!showCart.value && showFavorites.value) showFavorites.value = false;
-  showCart.value = !showCart.value;
-}
-
-function goCheckout() {
-  showCart.value = false;
-  router.push({ name: "checkout" });
-}
+const { showFavorites, showCart, toggleFavorites, toggleCart, goCheckout } = useHomeViewModel();
 </script>
 
 <style lang="scss" scoped>
@@ -57,22 +31,20 @@ function goCheckout() {
     transition: transform 0.3s ease;
     position: relative;
     z-index: 10;
-  }
 
-  .favorites {
-    order: 1;
-    transform: translateX(-100%);
-  }
+    &.favorites {
+      order: 1;
+      transform: translateX(-100%);
+    }
 
-  .cart {
-    order: 3;
-    transform: translateX(100%);
+    &.cart {
+      order: 3;
+      transform: translateX(100%);
+    }
   }
 
   &.sidebar-open {
-    .favorites {
-      transform: translateX(0);
-    }
+    .favorites,
     .cart {
       transform: translateX(0);
     }
@@ -83,10 +55,8 @@ function goCheckout() {
     order: 2;
     overflow-y: auto;
   }
-}
 
-@media (max-width: 768px) {
-  .main-container {
+  @media (max-width: 768px) {
     flex-direction: column;
 
     .sidebar {

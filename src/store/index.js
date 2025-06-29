@@ -7,63 +7,63 @@ export default createStore({
     movies: [],
     favorites: [],
     cart: [],
-    loading: false,
+    isLoading: false,
     purchaseStatus: null,
   },
 
   getters: {
-    isFavorite: (state) => (movieId) => state.favorites.some((m) => m.id === movieId),
-    isInCart: (state) => (movieId) => state.cart.some((m) => m.id === movieId),
+    isFavorite: (state) => (movieId) => state.favorites.some((movie) => movie.id === movieId),
+    isInCart: (state) => (movieId) => state.cart.some((movie) => movie.id === movieId),
     totalCartItems: (state) => state.cart.length,
   },
 
   mutations: {
-    SET_MOVIES(state, movies) {
+    setMovies(state, movies) {
       state.movies = movies;
     },
-    SET_LOADING(state, isLoading) {
-      state.loading = isLoading;
+    setLoading(state, isLoading) {
+      state.isLoading = isLoading;
     },
-    ADD_TO_FAVORITES(state, movie) {
+    addToFavorites(state, movie) {
       if (!state.favorites.some((m) => m.id === movie.id)) {
         state.favorites.push(movie);
       }
     },
-    REMOVE_FROM_FAVORITES(state, movieId) {
+    removeFromFavorites(state, movieId) {
       state.favorites = state.favorites.filter((m) => m.id !== movieId);
     },
-    ADD_TO_CART(state, movie) {
+    addToCart(state, movie) {
       if (!state.cart.some((m) => m.id === movie.id)) {
         state.cart.push(movie);
       }
     },
-    REMOVE_FROM_CART(state, id) {
-      state.cart = state.cart.filter((item) => item.id !== id);
+    removeFromCart(state, movieId) {
+      state.cart = state.cart.filter((m) => m.id !== movieId);
     },
-    CLEAR_CART(state) {
+    clearCart(state) {
       state.cart = [];
     },
-    SET_PURCHASE_STATUS(state, status) {
+    setPurchaseStatus(state, status) {
       state.purchaseStatus = status;
     },
   },
 
   actions: {
     async loadMovies({ commit }) {
+      commit("setLoading", true);
       try {
-        commit("SET_LOADING", true);
         const movies = await fetchPopularMovies();
-        commit("SET_MOVIES", movies);
+        commit("setMovies", movies);
       } catch (error) {
-        console.error("Failed to load movies:", error);
+        console.error("Error loading movies:", error);
       } finally {
-        commit("SET_LOADING", false);
+        commit("setLoading", false);
       }
     },
 
     async searchMovies({ commit }, query) {
+      commit("setLoading", true);
       try {
-        commit("SET_LOADING", true);
         const { data } = await axios.get(`${import.meta.env.VITE_API_BASE_URL}/search/movie`, {
           params: {
             api_key: import.meta.env.VITE_API_KEY,
@@ -71,38 +71,35 @@ export default createStore({
             language: "pt-BR",
           },
         });
-        commit("SET_MOVIES", data.results);
+        commit("setMovies", data.results);
       } catch (error) {
-        console.error("Failed to search for movies:", error);
-        commit("SET_MOVIES", []);
+        console.error("Error searching movies:", error);
+        commit("setMovies", []);
       } finally {
-        commit("SET_LOADING", false);
+        commit("setLoading", false);
       }
     },
 
     toggleFavorite({ commit, getters }, movie) {
-      if (getters.isFavorite(movie.id)) {
-        commit("REMOVE_FROM_FAVORITES", movie.id);
-      } else {
-        commit("ADD_TO_FAVORITES", movie);
-      }
+      const action = getters.isFavorite(movie.id) ? "removeFromFavorites" : "addToFavorites";
+      commit(action, movie.id || movie);
     },
 
     toggleCart({ commit, getters }, movie) {
-      if (getters.isInCart(movie.id)) {
-        commit("REMOVE_FROM_CART", movie.id);
-      } else {
-        commit("ADD_TO_CART", movie);
-      }
+      const action = getters.isInCart(movie.id) ? "removeFromCart" : "addToCart";
+      commit(action, movie.id || movie);
     },
 
     async finalizePurchase({ commit }) {
-      commit("SET_PURCHASE_STATUS", null);
-      commit("SET_LOADING", true);
-      await new Promise((res) => setTimeout(res, 2000));
-      commit("SET_LOADING", false);
-      commit("CLEAR_CART");
-      commit("SET_PURCHASE_STATUS", "success");
+      commit("setPurchaseStatus", null);
+      commit("setLoading", true);
+      try {
+        await new Promise((resolve) => setTimeout(resolve, 2000));
+        commit("clearCart");
+        commit("setPurchaseStatus", "success");
+      } finally {
+        commit("setLoading", false);
+      }
     },
   },
 });

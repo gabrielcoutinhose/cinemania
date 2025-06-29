@@ -4,9 +4,11 @@
       <div class="modal-content">
         <h2>Compra realizada com sucesso!</h2>
         <p>
-          <slot>Obrigado por comprar conosco. Seu pedido está sendo processado.</slot>
+          <slot>
+            Obrigado por comprar conosco. Seu pedido está sendo processado.
+          </slot>
         </p>
-        <button @click="close">Fechar</button>
+        <button class="close-button" @click="close">Fechar</button>
       </div>
     </div>
   </transition>
@@ -26,36 +28,35 @@ const props = defineProps({
 
 const emit = defineEmits(["close"]);
 
-let timer;
+let timer = null;
 
-function close() {
-  emit("close");
-}
+const close = () => emit("close");
 
-function handleEsc(e) {
-  if (e.key === "Escape") close();
-}
+const handleEscape = (event) => {
+  if (event.key === "Escape") close();
+};
+
+const cleanup = () => {
+  document.removeEventListener("keydown", handleEscape);
+  clearTimeout(timer);
+};
 
 watch(
   () => props.show,
-  (val) => {
-    if (val) {
-      document.addEventListener("keydown", handleEsc);
+  (isVisible) => {
+    if (isVisible) {
+      document.addEventListener("keydown", handleEscape);
       if (props.autoClose) {
         clearTimeout(timer);
         timer = setTimeout(close, props.duration);
       }
     } else {
-      document.removeEventListener("keydown", handleEsc);
-      clearTimeout(timer);
+      cleanup();
     }
-  },
+  }
 );
 
-onBeforeUnmount(() => {
-  document.removeEventListener("keydown", handleEsc);
-  clearTimeout(timer);
-});
+onBeforeUnmount(cleanup);
 </script>
 
 <style scoped>
@@ -70,7 +71,7 @@ onBeforeUnmount(() => {
 }
 
 .modal-content {
-  background: white;
+  background-color: #fff;
   padding: 2rem;
   border-radius: 12px;
   max-width: 400px;
@@ -80,7 +81,7 @@ onBeforeUnmount(() => {
   animation: pop 0.3s ease-out;
 }
 
-button {
+.close-button {
   margin-top: 1rem;
   background-color: #22c55e;
   color: white;
@@ -91,7 +92,7 @@ button {
   font-weight: bold;
 }
 
-button:hover {
+.close-button:hover {
   background-color: #16a34a;
 }
 

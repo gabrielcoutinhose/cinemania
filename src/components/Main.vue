@@ -1,40 +1,27 @@
 <template>
   <div class="main-container" :class="{ 'sidebar-open': showFavorites || showCart }">
     <Movies />
-
-    <SidebarFavorites
-      v-if="showFavorites"
-      @close="$emit('close-favorites')"
-      class="sidebar favorites"
-    />
-
-    <SidebarCart
-      v-if="showCart"
-      @close="$emit('close-cart')"
-      class="sidebar cart"
-      @go-checkout="goCheckout"
-    />
+    <SidebarFavorites v-if="showFavorites" @close="$emit('close-favorites')" class="sidebar favorites" />
+    <SidebarCart v-if="showCart" @close="$emit('close-cart')" @go-checkout="goCheckout" class="sidebar cart" />
   </div>
 </template>
 
-<script>
+<script setup>
+import { useRouter } from "vue-router";
 import Movies from "@/components/Movies.vue";
 import SidebarFavorites from "@/components/SidebarFavorites.vue";
 import SidebarCart from "@/components/SidebarCart.vue";
 
-export default {
-  name: "Main",
-  components: { Movies, SidebarFavorites, SidebarCart },
-  props: {
-    showFavorites: Boolean,
-    showCart: Boolean,
-  },
-  methods: {
-    goCheckout() {
-      this.$emit("close-cart");
-      this.$router.push({ name: "checkout" });
-    },
-  },
+defineProps({
+  showFavorites: Boolean,
+  showCart: Boolean,
+});
+
+const router = useRouter();
+
+const goCheckout = () => {
+  router.push({ name: "checkout" });
+  defineEmits(["close-cart"])();
 };
 </script>
 
@@ -52,36 +39,32 @@ export default {
     transition: transform 0.3s ease;
     position: relative;
     z-index: 10;
-  }
 
-  .favorites {
-    order: 1;
-    transform: translateX(-100%);
-  }
+    &.favorites {
+      order: 1;
+      transform: translateX(-100%);
+    }
 
-  .cart {
-    order: 3;
-    transform: translateX(100%);
+    &.cart {
+      order: 3;
+      transform: translateX(100%);
+    }
   }
 
   &.sidebar-open {
-    .favorites {
-      transform: translateX(0);
-    }
+    .favorites,
     .cart {
       transform: translateX(0);
     }
   }
 
-  > *:nth-child(2) {
+  > *:nth-child(1) {
     flex: 1;
     order: 2;
     overflow-y: auto;
   }
-}
 
-@media (max-width: 768px) {
-  .main-container {
+  @media (max-width: 768px) {
     flex-direction: column;
 
     .sidebar {
@@ -101,7 +84,7 @@ export default {
       }
     }
 
-    > *:nth-child(2) {
+    > *:nth-child(1) {
       order: 1;
       height: 100%;
       overflow-y: auto;

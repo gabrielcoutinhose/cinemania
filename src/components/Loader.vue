@@ -11,17 +11,6 @@
   border-radius: 50%;
   animation: spin 0.8s linear infinite;
   margin: 40px auto;
-
-  &:after {
-    content: " ";
-    display: block;
-    width: 1px;
-    height: 1px;
-    overflow: hidden;
-    position: absolute;
-    white-space: nowrap;
-    clip: rect(0, 0, 0, 0);
-  }
 }
 
 @keyframes spin {

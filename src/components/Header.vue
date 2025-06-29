@@ -7,7 +7,7 @@
     <form @submit.prevent="handleSearch" class="search" role="search" aria-label="Buscar filme">
       <input
         v-if="showSearchInput"
-        v-model="search"
+        v-model="searchQuery"
         type="text"
         placeholder="Buscar filme..."
         class="search-input"
@@ -35,52 +35,40 @@
   </header>
 </template>
 
-<script>
-import { mapActions } from "vuex";
+<script setup>
+import { ref, nextTick, onMounted, onUnmounted } from "vue";
+import { useStore } from "vuex";
 
-export default {
-  name: "Header",
-  data() {
-    return {
-      search: "",
-      showSearchInput: window.innerWidth > 600,
-    };
-  },
-  methods: {
-    ...mapActions(["searchMovies"]),
-    handleSearch() {
-      const query = this.search.trim();
-      if (query.length > 0) {
-        this.searchMovies(query);
-      }
-    },
-    toggleSearchInput() {
-      if (window.innerWidth <= 600) {
-        this.showSearchInput = !this.showSearchInput;
-        if (!this.showSearchInput) this.search = "";
-        else this.$nextTick(() => this.$refs.searchInput?.focus());
-      } else {
-        this.handleSearch();
-      }
-    },
-    handleClickOutside(event) {
-      if (
-        this.showSearchInput &&
-        window.innerWidth <= 600 &&
-        !this.$refs.header.contains(event.target)
-      ) {
-        this.showSearchInput = false;
-        this.search = "";
-      }
-    },
-  },
-  mounted() {
-    window.addEventListener("click", this.handleClickOutside);
-  },
-  beforeUnmount() {
-    window.removeEventListener("click", this.handleClickOutside);
-  },
+const store = useStore();
+const header = ref(null);
+const searchInput = ref(null);
+const searchQuery = ref("");
+const showSearchInput = ref(window.innerWidth > 600);
+
+const handleSearch = () => {
+  const query = searchQuery.value.trim();
+  if (query) store.dispatch("searchMovies", query);
 };
+
+const toggleSearchInput = () => {
+  if (window.innerWidth <= 600) {
+    showSearchInput.value = !showSearchInput.value;
+    if (!showSearchInput.value) searchQuery.value = "";
+    else nextTick(() => searchInput.value?.focus());
+  } else {
+    handleSearch();
+  }
+};
+
+const handleClickOutside = (event) => {
+  if (showSearchInput.value && window.innerWidth <= 600 && !header.value?.contains(event.target)) {
+    showSearchInput.value = false;
+    searchQuery.value = "";
+  }
+};
+
+onMounted(() => window.addEventListener("click", handleClickOutside));
+onUnmounted(() => window.removeEventListener("click", handleClickOutside));
 </script>
 
 <style lang="scss" scoped>
@@ -93,8 +81,10 @@ export default {
   color: white;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
 
-  .logo {
-    height: 32px;
+  .left {
+    .logo {
+      height: 32px;
+    }
   }
 
   .search {
@@ -108,7 +98,6 @@ export default {
       border: none;
       border-radius: 4px 0 0 4px;
       font-size: 1rem;
-      transition: opacity 0.3s ease;
     }
 
     .search-btn {
@@ -120,7 +109,6 @@ export default {
       cursor: pointer;
       display: flex;
       align-items: center;
-      justify-content: center;
 
       svg {
         width: 1rem;
@@ -139,7 +127,7 @@ export default {
       color: white;
       font-size: 1.5rem;
       cursor: pointer;
-      transition: transform 0.2s ease;
+      transition: transform 0.2s, color 0.2s;
 
       &:hover {
         transform: scale(1.2);
@@ -147,20 +135,16 @@ export default {
       }
     }
   }
-}
 
-@media (max-width: 600px) {
-  .header {
+  @media (max-width: 600px) {
     padding: 0.5rem 1rem;
 
     .search {
       margin: 0 0.5rem;
 
       .search-input {
-        display: block;
         width: 100%;
         padding: 0.4rem 0.8rem;
-        font-size: 1rem;
       }
     }
   }

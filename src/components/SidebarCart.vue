@@ -7,29 +7,19 @@
         <button @click="removeFromCart(movie.id)" aria-label="Remover do carrinho">Remover</button>
       </li>
     </ul>
-    <button class="checkout" @click="goToCheckout">Finalizar Compra</button>
+    <button class="checkout" @click="$emit('go-checkout')">Finalizar Compra</button>
     <button class="close" @click="$emit('close')">Fechar</button>
   </aside>
 </template>
 
-<script>
-import { mapState, mapActions } from "vuex";
+<script setup>
+import { computed } from "vue";
+import { useStore } from "vuex";
 
-export default {
-  name: "SidebarCart",
-  computed: {
-    ...mapState(["cart"]),
-  },
-  methods: {
-    ...mapActions(["removeFromCart"]),
-    removeFromCart(id) {
-      this.removeFromCart(id);
-    },
-    goToCheckout() {
-      this.$emit("go-checkout");
-    },
-  },
-};
+const store = useStore();
+const cart = computed(() => store.state.cart);
+
+const removeFromCart = (id) => store.dispatch("removeFromCart", id);
 </script>
 
 <style lang="scss" scoped>
@@ -54,28 +44,28 @@ export default {
   ul {
     list-style: none;
     padding: 0;
-    flex: 1 1 auto;
+    flex: 1;
     overflow-y: auto;
-  }
 
-  li {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    margin-bottom: 1rem;
+    li {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 1rem;
 
-    button {
-      background: transparent;
-      border: none;
-      color: #f44336;
-      cursor: pointer;
-      font-weight: bold;
-      padding: 0.2rem 0.5rem;
-      border-radius: 4px;
-      transition: background 0.2s ease;
+      button {
+        background: transparent;
+        border: none;
+        color: #f44336;
+        cursor: pointer;
+        font-weight: bold;
+        padding: 0.2rem 0.5rem;
+        border-radius: 4px;
+        transition: background 0.2s;
 
-      &:hover {
-        background: rgba(244, 67, 54, 0.2);
+        &:hover {
+          background: rgba(244, 67, 54, 0.2);
+        }
       }
     }
   }
@@ -90,7 +80,7 @@ export default {
     border-radius: 4px;
     width: 100%;
     font-weight: bold;
-    transition: background 0.3s ease;
+    transition: background 0.3s;
 
     &:hover {
       background: #45a049;
@@ -107,10 +97,8 @@ export default {
     border-radius: 4px;
     width: 100%;
   }
-}
 
-@media (max-width: 768px) {
-  .sidebar {
+  @media (max-width: 768px) {
     position: fixed;
     bottom: 0;
     right: 0;
