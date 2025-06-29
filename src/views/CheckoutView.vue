@@ -8,24 +8,15 @@ import { getValidationSchema, fields, handleCEPSearch } from "@/viewmodels/Check
 
 const schema = getValidationSchema();
 
-const {
-  handleSubmit,
-  errors,
-  values,
-  validateField,
-  setFieldValue,
-  setFieldError,
-} = useForm({
+const { handleSubmit, errors, values, validateField, setFieldValue, setFieldError } = useForm({
   validationSchema: schema,
-  initialValues: Object.fromEntries(fields.map(field => [field.name, ""])),
+  initialValues: Object.fromEntries(fields.map((field) => [field.name, ""])),
 });
 
 const store = useStore();
 
 const cart = computed(() => store.state.cart);
-const total = computed(() =>
-  cart.value.reduce((sum, item) => sum + item.price * item.quantity, 0)
-);
+const total = computed(() => cart.value.reduce((sum, item) => sum + item.price * item.quantity, 0));
 
 const showModal = ref(false);
 

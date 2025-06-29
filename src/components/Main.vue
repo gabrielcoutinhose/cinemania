@@ -1,8 +1,17 @@
 <template>
   <div class="main-container" :class="{ 'sidebar-open': showFavorites || showCart }">
     <Movies />
-    <SidebarFavorites v-if="showFavorites" @close="$emit('close-favorites')" class="sidebar favorites" />
-    <SidebarCart v-if="showCart" @close="$emit('close-cart')" @go-checkout="goCheckout" class="sidebar cart" />
+    <SidebarFavorites
+      v-if="showFavorites"
+      @close="$emit('close-favorites')"
+      class="sidebar favorites"
+    />
+    <SidebarCart
+      v-if="showCart"
+      @close="$emit('close-cart')"
+      @go-checkout="goCheckout"
+      class="sidebar cart"
+    />
   </div>
 </template>
 

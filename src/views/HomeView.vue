@@ -3,7 +3,12 @@
     <Header />
     <Movies />
     <SidebarFavorites v-if="showFavorites" @close="toggleFavorites" class="sidebar favorites" />
-    <SidebarCart v-if="showCart" @close="toggleCart" @go-checkout="goCheckout" class="sidebar cart" />
+    <SidebarCart
+      v-if="showCart"
+      @close="toggleCart"
+      @go-checkout="goCheckout"
+      class="sidebar cart"
+    />
   </div>
 </template>
 

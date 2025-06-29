@@ -4,9 +4,7 @@
       <div class="modal-content">
         <h2>Compra realizada com sucesso!</h2>
         <p>
-          <slot>
-            Obrigado por comprar conosco. Seu pedido está sendo processado.
-          </slot>
+          <slot> Obrigado por comprar conosco. Seu pedido está sendo processado. </slot>
         </p>
         <button class="close-button" @click="close">Fechar</button>
       </div>
@@ -53,7 +51,7 @@ watch(
     } else {
       cleanup();
     }
-  }
+  },
 );
 
 onBeforeUnmount(cleanup);

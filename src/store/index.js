@@ -1,6 +1,6 @@
 import { createStore } from "vuex";
 import axios from "axios";
-import { fetchPopularMovies } from "@/api/movies";
+import { fetchPopularMovies } from "@/services/api";
 
 export default createStore({
   state: {

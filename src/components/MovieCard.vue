@@ -26,7 +26,7 @@ defineProps({
 const imageUrl = computed(() =>
   props.movie.poster_path
     ? `https://image.tmdb.org/t/p/w500${props.movie.poster_path}`
-    : new URL("@/assets/fallback-poster.jpg", import.meta.url).href
+    : new URL("@/assets/fallback-poster.jpg", import.meta.url).href,
 );
 </script>
 
@@ -71,7 +71,9 @@ const imageUrl = computed(() =>
       color: white;
       font-size: 1.2rem;
       cursor: pointer;
-      transition: transform 0.2s, color 0.2s;
+      transition:
+        transform 0.2s,
+        color 0.2s;
 
       &:hover {
         transform: scale(1.2);

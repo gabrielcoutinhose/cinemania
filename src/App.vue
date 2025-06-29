@@ -6,5 +6,4 @@
 import "@/styles/main.scss";
 </script>
 
-<style>
-</style>
+<style></style>
