@@ -98,7 +98,6 @@ export default createStore({
       commit(action, movie.id);
     },
 
-
     async finalizePurchase({ commit }) {
       commit("setPurchaseStatus", null);
       commit("setLoading", true);

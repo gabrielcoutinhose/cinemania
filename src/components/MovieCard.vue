@@ -30,7 +30,6 @@ const imageUrl = computed(() =>
 );
 </script>
 
-
 <style lang="scss" scoped>
 .card {
   background: #1e1e1e;
