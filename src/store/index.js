@@ -81,21 +81,20 @@ export default createStore({
     },
 
     toggleFavorite({ commit, getters }, movie) {
-      if (!movie?.id) {
-        console.warn("toggleFavorite chamado com movie inválido:", movie);
-        return;
+      if (!movie?.id) return;
+      if (getters.isFavorite(movie.id)) {
+        commit("removeFromFavorites", movie.id);
+      } else {
+        commit("addToFavorites", movie);
       }
-      const action = getters.isFavorite(movie.id) ? "removeFromFavorites" : "addToFavorites";
-      commit(action, movie.id);
     },
-
     toggleCart({ commit, getters }, movie) {
-      if (!movie?.id) {
-        console.warn("toggleCart chamado com movie inválido:", movie);
-        return;
+      if (!movie?.id) return;
+      if (getters.isInCart(movie.id)) {
+        commit("removeFromCart", movie.id);
+      } else {
+        commit("addToCart", movie);
       }
-      const action = getters.isInCart(movie.id) ? "removeFromCart" : "addToCart";
-      commit(action, movie.id);
     },
 
     async finalizePurchase({ commit }) {

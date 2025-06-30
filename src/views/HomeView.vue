@@ -1,16 +1,25 @@
 <template>
-  <Header />
+  <Header
+  @toggle-favorites="toggleFavorites"
+  @toggle-cart="toggleCart"
+  />
+  <SidebarFavorites v-if="showFavorites" @close="toggleFavorites" class="sidebar favorites" />
+  <SidebarCart
+    v-if="showCart"
+    @close="toggleCart"
+    @go-checkout="goCheckout"
+    class="sidebar cart"
+  />
   <Main>
     <div class="main-container" :class="{ 'sidebar-open': showFavorites || showCart }">
       <Movies />
       <Loader />
-      <MovieCard />
-      <SidebarFavorites v-if="showFavorites" @close="toggleFavorites" class="sidebar favorites" />
-      <SidebarCart
-        v-if="showCart"
-        @close="toggleCart"
-        @go-checkout="goCheckout"
-        class="sidebar cart"
+      <MovieCard
+        v-for="movie in movies"
+        :key="movie.id"
+        :movie="movie"
+        @add-to-cart="addToCart"
+        @add-to-favorites="toggleFavorite"
       />
     </div>
   </Main>
@@ -27,6 +36,8 @@ import SidebarCart from "@/components/SidebarCart.vue";
 import { useHomeViewModel } from "@/viewmodels/HomeViewModel";
 
 const { showFavorites, showCart, toggleFavorites, toggleCart, goCheckout } = useHomeViewModel();
+const addToCart = (movie) => store.dispatch("addToCart", movie);
+const toggleFavorite = (movie) => store.dispatch("toggleFavorite", movie);
 </script>
 
 <style lang="scss" scoped>

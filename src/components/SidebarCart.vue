@@ -19,7 +19,7 @@ import { useStore } from "vuex";
 const store = useStore();
 const cart = computed(() => store.state.cart);
 
-const removeFromCart = (id) => store.dispatch("removeFromCart", id);
+const removeFromCart = (id) => store.commit("removeFromCart", id);
 </script>
 
 <style lang="scss" scoped>
