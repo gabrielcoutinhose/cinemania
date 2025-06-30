@@ -16,7 +16,7 @@
 <script setup>
 import { computed } from "vue";
 
-defineProps({
+const props = defineProps({
   movie: {
     type: Object,
     required: true,
@@ -29,6 +29,7 @@ const imageUrl = computed(() =>
     : new URL("@/assets/fallback-poster.jpg", import.meta.url).href,
 );
 </script>
+
 
 <style lang="scss" scoped>
 .card {

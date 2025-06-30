@@ -1,20 +1,27 @@
 <template>
-  <div class="main-container" :class="{ 'sidebar-open': showFavorites || showCart }">
-    <Header />
-    <Movies />
-    <SidebarFavorites v-if="showFavorites" @close="toggleFavorites" class="sidebar favorites" />
-    <SidebarCart
-      v-if="showCart"
-      @close="toggleCart"
-      @go-checkout="goCheckout"
-      class="sidebar cart"
-    />
-  </div>
+  <Header />
+  <Main>
+    <div class="main-container" :class="{ 'sidebar-open': showFavorites || showCart }">
+      <Movies />
+      <Loader />
+      <MovieCard />
+      <SidebarFavorites v-if="showFavorites" @close="toggleFavorites" class="sidebar favorites" />
+      <SidebarCart
+        v-if="showCart"
+        @close="toggleCart"
+        @go-checkout="goCheckout"
+        class="sidebar cart"
+      />
+    </div>
+  </Main>
 </template>
 
 <script setup>
 import Header from "@/components/Header.vue";
+import Main from "@/components/Main.vue";
 import Movies from "@/components/Movies.vue";
+import Loader from "@/components/Loader.vue";
+import MovieCard from "@/components/MovieCard.vue";
 import SidebarFavorites from "@/components/SidebarFavorites.vue";
 import SidebarCart from "@/components/SidebarCart.vue";
 import { useHomeViewModel } from "@/viewmodels/HomeViewModel";
