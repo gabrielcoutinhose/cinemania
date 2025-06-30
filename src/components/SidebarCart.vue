@@ -1,13 +1,17 @@
 <template>
   <aside class="sidebar">
     <h2>Carrinho</h2>
-    <ul>
-      <li v-for="movie in cart" :key="movie.id">
-        {{ movie.title }}
-        <button @click="removeFromCart(movie.id)" aria-label="Remover do carrinho">Remover</button>
-      </li>
-    </ul>
-    <button class="checkout" @click="$emit('go-checkout')">Finalizar Compra</button>
+
+    <CartItemList :items="cart" :showPrice="false" @remove="removeFromCart" />
+
+    <button
+      v-if="cart.length"
+      class="checkout"
+      @click="$emit('go-checkout')"
+    >
+      Finalizar Compra
+    </button>
+
     <button class="close" @click="$emit('close')">Fechar</button>
   </aside>
 </template>
@@ -15,6 +19,7 @@
 <script setup>
 import { computed } from "vue";
 import { useStore } from "vuex";
+import CartItemList from "./CartItemList.vue";
 
 const store = useStore();
 const cart = computed(() => store.state.cart);
@@ -39,35 +44,6 @@ const removeFromCart = (id) => store.commit("removeFromCart", id);
 
   h2 {
     margin-bottom: 1rem;
-  }
-
-  ul {
-    list-style: none;
-    padding: 0;
-    flex: 1;
-    overflow-y: auto;
-
-    li {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      margin-bottom: 1rem;
-
-      button {
-        background: transparent;
-        border: none;
-        color: #f44336;
-        cursor: pointer;
-        font-weight: bold;
-        padding: 0.2rem 0.5rem;
-        border-radius: 4px;
-        transition: background 0.2s;
-
-        &:hover {
-          background: rgba(244, 67, 54, 0.2);
-        }
-      }
-    }
   }
 
   .checkout {

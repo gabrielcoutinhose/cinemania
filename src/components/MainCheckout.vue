@@ -1,6 +1,6 @@
 <template>
-  <div class="main-container" :class="{ 'sidebar-open': showFavorites || showCart }">
-    <Movies />
+  <div class="main" :class="{ 'sidebar-open': showFavorites || showCart }">
+    <MainCheckoutBox />
     <SidebarFavorites
       v-if="showFavorites"
       @close="$emit('close-favorites')"
@@ -17,7 +17,7 @@
 
 <script setup>
 import { useRouter } from "vue-router";
-import Movies from "@/components/Movies.vue";
+import MainCheckoutBox from "@/components/MainHomeBox.vue";
 import SidebarFavorites from "@/components/SidebarFavorites.vue";
 import SidebarCart from "@/components/SidebarCart.vue";
 
@@ -35,7 +35,7 @@ const goCheckout = () => {
 </script>
 
 <style lang="scss" scoped>
-.main-container {
+.main {
   display: flex;
   height: 100vh;
   overflow: hidden;

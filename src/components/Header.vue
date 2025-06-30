@@ -14,11 +14,7 @@
         aria-label="Campo de busca"
         ref="searchInput"
       />
-      <button
-        type="submit"
-        class="search-btn"
-        aria-label="Buscar"
-      >
+      <button type="submit" class="search-btn" aria-label="Buscar">
         <font-awesome-icon icon="search" />
       </button>
     </form>
@@ -148,7 +144,9 @@ onUnmounted(() => {
       color: white;
       font-size: 1.5rem;
       cursor: pointer;
-      transition: transform 0.2s, color 0.2s;
+      transition:
+        transform 0.2s,
+        color 0.2s;
 
       &:hover {
         transform: scale(1.2);

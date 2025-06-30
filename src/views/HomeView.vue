@@ -1,18 +1,10 @@
 <template>
-  <Header
-  @toggle-favorites="toggleFavorites"
-  @toggle-cart="toggleCart"
-  />
+  <Header @toggle-favorites="toggleFavorites" @toggle-cart="toggleCart" />
   <SidebarFavorites v-if="showFavorites" @close="toggleFavorites" class="sidebar favorites" />
-  <SidebarCart
-    v-if="showCart"
-    @close="toggleCart"
-    @go-checkout="goCheckout"
-    class="sidebar cart"
-  />
-  <Main>
+  <SidebarCart v-if="showCart" @close="toggleCart" @go-checkout="goCheckout" class="sidebar cart" />
+  <MainHome>
     <div class="main-container" :class="{ 'sidebar-open': showFavorites || showCart }">
-      <Movies />
+      <MainHomeBox />
       <Loader />
       <MovieCard
         v-for="movie in movies"
@@ -22,13 +14,13 @@
         @add-to-favorites="toggleFavorite"
       />
     </div>
-  </Main>
+  </MainHome>
 </template>
 
 <script setup>
 import Header from "@/components/Header.vue";
-import Main from "@/components/Main.vue";
-import Movies from "@/components/Movies.vue";
+import MainHome from "@/components/MainHome.vue";
+import MainHomeBox from "@/components/MainHomeBox.vue";
 import Loader from "@/components/Loader.vue";
 import MovieCard from "@/components/MovieCard.vue";
 import SidebarFavorites from "@/components/SidebarFavorites.vue";
