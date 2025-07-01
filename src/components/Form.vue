@@ -61,7 +61,7 @@ const {
   validateOnMount: false,
   validateOnBlur: true,
   validateOnChange: false,
-  validateOnInput: false,
+  validateOnInput: true,
   initialValues: Object.fromEntries(fields.map(f => [f.name, ''])),
 });
 
@@ -76,13 +76,17 @@ function searchCEP() {
 
 const onSubmit = handleSubmit(async () => {
   showModal.value = true;
+  await new Promise(resolve => setTimeout(resolve, 3000));
+
   await store.dispatch('finalizePurchase');
+
+  resetForm();
+
   setTimeout(() => {
-    resetForm();
-    Object.keys(touched).forEach(k => (touched[k] = false));
     showModal.value = false;
+    Object.keys(touched).forEach(k => (touched[k] = false));
     router.push('/');
-  }, 3500);
+  }, 100);
 });
 
 function handleModalClose() {

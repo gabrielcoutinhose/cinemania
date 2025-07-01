@@ -1,13 +1,15 @@
 <template>
-  <transition name="fade-slide" @after-leave="$emit('closed')">
-    <div v-if="show" class="modal-overlay" @click.self="close">
-      <div class="modal-content">
-        <h2>Compra realizada com sucesso!</h2>
-        <p><slot>Obrigado por comprar conosco. Seu pedido está sendo processado.</slot></p>
-        <button class="close-button" @click="close">Fechar</button>
+  <div v-if="show">
+    <transition name="fade-slide" @after-leave="$emit('closed')">
+      <div class="modal-overlay" @click.self="close">
+        <div class="modal-content">
+          <h2>Compra realizada com sucesso!</h2>
+          <p><slot>Obrigado por comprar conosco. Seu pedido está sendo processado.</slot></p>
+          <button class="close-button" @click="close">Fechar</button>
+        </div>
       </div>
-    </div>
-  </transition>
+    </transition>
+  </div>
 </template>
 
 <script setup>

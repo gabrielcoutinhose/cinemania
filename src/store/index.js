@@ -115,5 +115,6 @@ export default createStore({
         commit("setLoading", false);
       }
     },
+
   },
 });
