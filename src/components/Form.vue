@@ -6,7 +6,7 @@
       <input
         v-if="field.mask"
         :value="values[field.name]"
-        @input="e => setFieldValue(field.name, e.target.value)"
+        @input="(e) => setFieldValue(field.name, e.target.value)"
         v-bind="field.attrs"
         v-mask="field.mask"
         @blur="() => onBlur(field.name)"
@@ -15,7 +15,7 @@
       <input
         v-else
         :value="values[field.name]"
-        @input="e => setFieldValue(field.name, e.target.value)"
+        @input="(e) => setFieldValue(field.name, e.target.value)"
         v-bind="field.attrs"
         @blur="() => onBlur(field.name)"
       />
@@ -33,12 +33,12 @@
 </template>
 
 <script setup>
-import { ref, reactive } from 'vue';
-import { useStore } from 'vuex';
-import { useRouter } from 'vue-router';
-import { useForm } from 'vee-validate';
-import SuccessModal from '@/components/SuccessModal.vue';
-import { getValidationSchema, fields, handleCEPSearch } from '@/viewmodels/CheckoutViewModel';
+import { ref, reactive } from "vue";
+import { useStore } from "vuex";
+import { useRouter } from "vue-router";
+import { useForm } from "vee-validate";
+import SuccessModal from "@/components/SuccessModal.vue";
+import { getValidationSchema, fields, handleCEPSearch } from "@/viewmodels/CheckoutViewModel";
 
 const router = useRouter();
 const store = useStore();
@@ -48,22 +48,15 @@ const touched = reactive({});
 
 const schema = getValidationSchema();
 
-const {
-  handleSubmit,
-  errors,
-  values,
-  validateField,
-  setFieldValue,
-  setFieldError,
-  resetForm,
-} = useForm({
-  validationSchema: schema,
-  validateOnMount: false,
-  validateOnBlur: true,
-  validateOnChange: false,
-  validateOnInput: true,
-  initialValues: Object.fromEntries(fields.map(f => [f.name, ''])),
-});
+const { handleSubmit, errors, values, validateField, setFieldValue, setFieldError, resetForm } =
+  useForm({
+    validationSchema: schema,
+    validateOnMount: false,
+    validateOnBlur: true,
+    validateOnChange: false,
+    validateOnInput: true,
+    initialValues: Object.fromEntries(fields.map((f) => [f.name, ""])),
+  });
 
 function onBlur(fieldName) {
   touched[fieldName] = true;
@@ -76,16 +69,16 @@ function searchCEP() {
 
 const onSubmit = handleSubmit(async () => {
   showModal.value = true;
-  await new Promise(resolve => setTimeout(resolve, 3000));
+  await new Promise((resolve) => setTimeout(resolve, 3000));
 
-  await store.dispatch('finalizePurchase');
+  await store.dispatch("finalizePurchase");
 
   resetForm();
 
   setTimeout(() => {
     showModal.value = false;
-    Object.keys(touched).forEach(k => (touched[k] = false));
-    router.push('/');
+    Object.keys(touched).forEach((k) => (touched[k] = false));
+    router.push("/");
   }, 100);
 });
 

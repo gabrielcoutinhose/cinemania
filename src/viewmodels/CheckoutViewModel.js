@@ -22,10 +22,7 @@ export function getValidationSchema() {
     cep: yup.string().required("CEP é obrigatório").matches(CEP_REGEX, "CEP inválido"),
     endereco: yup.string().required("Endereço é obrigatório"),
     cidade: yup.string().required("Cidade é obrigatória"),
-    estado: yup
-      .string()
-      .required("Estado é obrigatório")
-      .length(2, "Estado inválido"),
+    estado: yup.string().required("Estado é obrigatório").length(2, "Estado inválido"),
   });
 }
 

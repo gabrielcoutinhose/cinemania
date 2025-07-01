@@ -4,11 +4,7 @@
 
     <CartItemList :items="cart" :showPrice="true" @remove="removeFromCart" />
 
-    <button
-      v-if="cart.length"
-      class="checkout"
-      @click="$emit('go-checkout')"
-    >
+    <button v-if="cart.length" class="checkout" @click="$emit('go-checkout')">
       Finalizar Compra
     </button>
 

@@ -13,7 +13,7 @@
 </template>
 
 <script setup>
-import { watch, onBeforeUnmount } from 'vue';
+import { watch, onBeforeUnmount } from "vue";
 
 const props = defineProps({
   show: Boolean,
@@ -21,20 +21,20 @@ const props = defineProps({
   duration: { type: Number, default: 3000 },
 });
 
-const emit = defineEmits(['close', 'closed']);
+const emit = defineEmits(["close", "closed"]);
 
 let timer = null;
 
 function close() {
-  emit('close');
+  emit("close");
 }
 
 function handleEscape(e) {
-  if (e.key === 'Escape') close();
+  if (e.key === "Escape") close();
 }
 
 function cleanup() {
-  document.removeEventListener('keydown', handleEscape);
+  document.removeEventListener("keydown", handleEscape);
   clearTimeout(timer);
 }
 
@@ -42,7 +42,7 @@ watch(
   () => props.show,
   (visible) => {
     if (visible) {
-      document.addEventListener('keydown', handleEscape);
+      document.addEventListener("keydown", handleEscape);
       if (props.autoClose) {
         clearTimeout(timer);
         timer = setTimeout(close, props.duration);

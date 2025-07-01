@@ -3,7 +3,7 @@
     <li v-for="item in items" :key="item.id" class="cart-item">
       <span class="title">{{ item.title }}:</span>
       <span v-if="showPrice" class="price">
-         <p>R$ {{ item.price ? Number(item.price).toFixed(2) : '0,00' }}</p>
+        <p>R$ {{ item.price ? Number(item.price).toFixed(2) : "0,00" }}</p>
       </span>
       <button @click="$emit('remove', item.id)" class="remove">Remover</button>
     </li>

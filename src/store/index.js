@@ -33,15 +33,15 @@ export default createStore({
       state.favorites = state.favorites.filter((m) => m.id !== movieId);
     },
     clearFavorites(state) {
-    state.favorites = [];
+      state.favorites = [];
     },
     addToCart(state, movie) {
-    if (!state.cart.some((m) => m.id === movie.id)) {
-      state.cart.push({
-        ...movie,
-        price: movie.price ?? 19.99,
-      });
-    }
+      if (!state.cart.some((m) => m.id === movie.id)) {
+        state.cart.push({
+          ...movie,
+          price: movie.price ?? 19.99,
+        });
+      }
     },
     removeFromCart(state, movieId) {
       state.cart = state.cart.filter((m) => m.id !== movieId);
@@ -115,6 +115,5 @@ export default createStore({
         commit("setLoading", false);
       }
     },
-
   },
 });
