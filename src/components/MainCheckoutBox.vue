@@ -1,7 +1,11 @@
 <template>
   <section class="box">
-    <Loader v-if="isLoading" />
-    <div v-else class="grid">Checkout Main</div>
+    <section class="box">
+      <Loader v-if="isLoading" />
+      <div v-else>
+        <slot />
+      </div>
+    </section>
   </section>
 </template>
 

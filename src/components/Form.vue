@@ -1,55 +1,93 @@
 <template>
-  <form @submit.prevent="onSubmit" class="checkout-form">
+  <form @submit.prevent="onSubmit" class="checkout-form" novalidate>
     <div v-for="field in fields" :key="field.name" class="form-field">
       <label :for="field.attrs.id">{{ field.label }}</label>
 
       <input
         v-if="field.mask"
-        v-model="values[field.name]"
+        :value="values[field.name]"
+        @input="e => setFieldValue(field.name, e.target.value)"
         v-bind="field.attrs"
         v-mask="field.mask"
-        @blur="() => validateField(field.name)"
+        @blur="() => onBlur(field.name)"
       />
 
       <input
         v-else
-        v-model="values[field.name]"
+        :value="values[field.name]"
+        @input="e => setFieldValue(field.name, e.target.value)"
         v-bind="field.attrs"
-        @blur="() => validateField(field.name)"
+        @blur="() => onBlur(field.name)"
       />
 
-      <span v-if="errors[field.name]" class="error">{{ errors[field.name] }}</span>
+      <span v-if="touched[field.name] && errors[field.name]" class="error">
+        {{ errors[field.name] }}
+      </span>
     </div>
 
-    <button type="button" @click="searchCEP" class="search-cep">Buscar CEP</button>
+    <button @click="searchCEP" type="button" class="search-cep">Buscar CEP</button>
     <button type="submit" class="submit-button">Finalizar Compra</button>
 
-    <SuccessModal :show="showModal" @close="showModal = false" autoClose />
+    <SuccessModal :show="showModal" @close="handleModalClose" autoClose />
   </form>
 </template>
 
 <script setup>
-import { ref } from "vue";
-import { useStore } from "vuex";
-import { useForm } from "vee-validate";
-import SuccessModal from "@/components/SuccessModal.vue";
-import { getValidationSchema, fields, handleCEPSearch } from "@/viewmodels/CheckoutViewModel";
+import { ref, reactive } from 'vue';
+import { useStore } from 'vuex';
+import { useRouter } from 'vue-router';
+import { useForm } from 'vee-validate';
+import SuccessModal from '@/components/SuccessModal.vue';
+import { getValidationSchema, fields, handleCEPSearch } from '@/viewmodels/CheckoutViewModel';
+
+const router = useRouter();
+const store = useStore();
+
+const showModal = ref(false);
+const touched = reactive({});
 
 const schema = getValidationSchema();
-const store = useStore();
-const showModal = ref(false);
 
-const { handleSubmit, errors, values, validateField, setFieldValue, setFieldError } = useForm({
+const {
+  handleSubmit,
+  errors,
+  values,
+  validateField,
+  setFieldValue,
+  setFieldError,
+  resetForm,
+} = useForm({
   validationSchema: schema,
-  initialValues: Object.fromEntries(fields.map((field) => [field.name, ""])),
+  validateOnMount: false,
+  validateOnBlur: true,
+  validateOnChange: false,
+  validateOnInput: false,
+  initialValues: Object.fromEntries(fields.map(f => [f.name, ''])),
 });
 
-const searchCEP = () => handleCEPSearch(values, validateField, setFieldValue, setFieldError);
+function onBlur(fieldName) {
+  touched[fieldName] = true;
+  validateField(fieldName);
+}
 
-const onSubmit = handleSubmit(() => {
+function searchCEP() {
+  handleCEPSearch(values, validateField, setFieldValue, setFieldError);
+}
+
+const onSubmit = handleSubmit(async () => {
   showModal.value = true;
-  store.commit("clearCart");
+  await store.dispatch('finalizePurchase');
+  setTimeout(() => {
+    resetForm();
+    Object.keys(touched).forEach(k => (touched[k] = false));
+    showModal.value = false;
+    router.push('/');
+  }, 3500);
 });
+
+function handleModalClose() {
+  showModal.value = false;
+}
 </script>
 
 <style scoped>

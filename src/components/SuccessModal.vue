@@ -1,11 +1,9 @@
 <template>
-  <transition name="fade-slide">
+  <transition name="fade-slide" @after-leave="$emit('closed')">
     <div v-if="show" class="modal-overlay" @click.self="close">
       <div class="modal-content">
         <h2>Compra realizada com sucesso!</h2>
-        <p>
-          <slot> Obrigado por comprar conosco. Seu pedido está sendo processado. </slot>
-        </p>
+        <p><slot>Obrigado por comprar conosco. Seu pedido está sendo processado.</slot></p>
         <button class="close-button" @click="close">Fechar</button>
       </div>
     </div>
@@ -13,37 +11,36 @@
 </template>
 
 <script setup>
-import { onBeforeUnmount, watch } from "vue";
+import { watch, onBeforeUnmount } from 'vue';
 
 const props = defineProps({
   show: Boolean,
   autoClose: Boolean,
-  duration: {
-    type: Number,
-    default: 3000,
-  },
+  duration: { type: Number, default: 3000 },
 });
 
-const emit = defineEmits(["close"]);
+const emit = defineEmits(['close', 'closed']);
 
 let timer = null;
 
-const close = () => emit("close");
+function close() {
+  emit('close');
+}
 
-const handleEscape = (event) => {
-  if (event.key === "Escape") close();
-};
+function handleEscape(e) {
+  if (e.key === 'Escape') close();
+}
 
-const cleanup = () => {
-  document.removeEventListener("keydown", handleEscape);
+function cleanup() {
+  document.removeEventListener('keydown', handleEscape);
   clearTimeout(timer);
-};
+}
 
 watch(
   () => props.show,
-  (isVisible) => {
-    if (isVisible) {
-      document.addEventListener("keydown", handleEscape);
+  (visible) => {
+    if (visible) {
+      document.addEventListener('keydown', handleEscape);
       if (props.autoClose) {
         clearTimeout(timer);
         timer = setTimeout(close, props.duration);

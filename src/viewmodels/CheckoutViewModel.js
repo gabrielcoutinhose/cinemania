@@ -22,41 +22,48 @@ export function getValidationSchema() {
     cep: yup.string().required("CEP é obrigatório").matches(CEP_REGEX, "CEP inválido"),
     endereco: yup.string().required("Endereço é obrigatório"),
     cidade: yup.string().required("Cidade é obrigatória"),
-    estado: yup.string().required("Estado é obrigatório").length(2, "Estado inválido"),
+    estado: yup
+      .string()
+      .required("Estado é obrigatório")
+      .length(2, "Estado inválido"),
   });
 }
 
 export const fields = [
-  { name: "nome", label: "Nome Completo", attrs: { id: "nome", type: "text", required: true } },
+  { name: "nome", label: "Nome Completo", attrs: { id: "nome", type: "text" } },
   {
     name: "cpf",
     label: "CPF",
-    attrs: { id: "cpf", placeholder: "000.000.000-00", required: true },
+    attrs: { id: "cpf", placeholder: "000.000.000-00" },
     mask: "###.###.###-##",
   },
   {
     name: "celular",
     label: "Celular",
-    attrs: { id: "celular", placeholder: "(00) 00000-0000", required: true },
+    attrs: { id: "celular", placeholder: "(00) 00000-0000" },
     mask: "(##) #####-####",
   },
   {
     name: "email",
     label: "Email",
-    attrs: { id: "email", type: "email", required: true, placeholder: "exemplo@dominio.com" },
+    attrs: {
+      id: "email",
+      type: "email",
+      placeholder: "exemplo@dominio.com",
+    },
   },
   {
     name: "cep",
     label: "CEP",
-    attrs: { id: "cep", placeholder: "00000-000", required: true },
+    attrs: { id: "cep", placeholder: "00000-000" },
     mask: "#####-###",
   },
-  { name: "endereco", label: "Endereço", attrs: { id: "endereco", type: "text", required: true } },
-  { name: "cidade", label: "Cidade", attrs: { id: "cidade", type: "text", required: true } },
+  { name: "endereco", label: "Endereço", attrs: { id: "endereco", type: "text" } },
+  { name: "cidade", label: "Cidade", attrs: { id: "cidade", type: "text" } },
   {
     name: "estado",
     label: "Estado",
-    attrs: { id: "estado", type: "text", maxlength: 2, required: true },
+    attrs: { id: "estado", type: "text", maxlength: 2 },
   },
 ];
 

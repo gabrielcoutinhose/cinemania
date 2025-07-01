@@ -1,9 +1,9 @@
 <template>
   <ul class="cart-list">
     <li v-for="item in items" :key="item.id" class="cart-item">
-      <span class="title">{{ item.title }}</span>
+      <span class="title">{{ item.title }}:</span>
       <span v-if="showPrice" class="price">
-        R$ {{ item.price.toFixed(2) }} × {{ item.quantity || 1 }}
+         <p>R$ {{ item.price ? Number(item.price).toFixed(2) : '0,00' }}</p>
       </span>
       <button @click="$emit('remove', item.id)" class="remove">Remover</button>
     </li>
@@ -41,6 +41,7 @@ defineEmits(["remove"]);
 .title {
   flex: 1;
   font-weight: 500;
+  margin-right: 1rem;
 }
 
 .price {

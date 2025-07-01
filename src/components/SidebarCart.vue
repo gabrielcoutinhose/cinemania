@@ -2,7 +2,7 @@
   <aside class="sidebar">
     <h2>Carrinho</h2>
 
-    <CartItemList :items="cart" :showPrice="false" @remove="removeFromCart" />
+    <CartItemList :items="cart" :showPrice="true" @remove="removeFromCart" />
 
     <button
       v-if="cart.length"

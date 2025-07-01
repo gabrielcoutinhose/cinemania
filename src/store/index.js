@@ -32,10 +32,16 @@ export default createStore({
     removeFromFavorites(state, movieId) {
       state.favorites = state.favorites.filter((m) => m.id !== movieId);
     },
+    clearFavorites(state) {
+    state.favorites = [];
+    },
     addToCart(state, movie) {
-      if (!state.cart.some((m) => m.id === movie.id)) {
-        state.cart.push(movie);
-      }
+    if (!state.cart.some((m) => m.id === movie.id)) {
+      state.cart.push({
+        ...movie,
+        price: movie.price ?? 19.99,
+      });
+    }
     },
     removeFromCart(state, movieId) {
       state.cart = state.cart.filter((m) => m.id !== movieId);
@@ -103,6 +109,7 @@ export default createStore({
       try {
         await new Promise((resolve) => setTimeout(resolve, 2000));
         commit("clearCart");
+        commit("clearFavorites");
         commit("setPurchaseStatus", "success");
       } finally {
         commit("setLoading", false);
