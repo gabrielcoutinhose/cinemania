@@ -1,7 +1,9 @@
 <template>
   <header class="header" ref="header">
     <div class="left">
-      <img src="@/assets/logo.jpg" alt="Logo da Loja de Filmes" class="logo" />
+      <router-link to="/">
+        <img src="@/assets/logo.jpg" alt="Logo da Loja de Filmes" class="logo" />
+      </router-link>
     </div>
 
     <form @submit.prevent="handleSearch" class="search" role="search" aria-label="Buscar filme">
@@ -19,6 +21,8 @@
       </button>
     </form>
 
+    <ThemeToggle />
+
     <div class="icons">
       <button @click="$emit('toggle-favorites')" aria-label="Abrir favoritos">
         <font-awesome-icon icon="heart" />
@@ -33,6 +37,7 @@
 </template>
 
 <script setup>
+import ThemeToggle from "@/components/ThemeToggle.vue";
 import { ref, computed, onMounted, onUnmounted, nextTick } from "vue";
 import { useStore } from "vuex";
 
@@ -92,6 +97,8 @@ onUnmounted(() => {
 
 <style lang="scss" scoped>
 .header {
+  height: 60px;
+  width: 100%;
   display: flex;
   align-items: center;
   justify-content: space-between;
@@ -102,6 +109,10 @@ onUnmounted(() => {
 
   .left .logo {
     height: 32px;
+    
+    router-link {
+    text-decoration: none;
+    }
   }
 
   .search {

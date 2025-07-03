@@ -3,21 +3,20 @@
   <SidebarFavorites v-if="showFavorites" @close="toggleFavorites" class="sidebar favorites" />
   <SidebarCart v-if="showCart" @close="toggleCart" @go-checkout="goCheckout" class="sidebar cart" />
   <MainHome>
-    <div class="main-container" :class="{ 'sidebar-open': showFavorites || showCart }">
-      <MainHomeBox />
-      <Loader />
-      <MovieCard
-        v-for="movie in movies"
-        :key="movie.id"
-        :movie="movie"
-        @add-to-cart="addToCart"
-        @add-to-favorites="toggleFavorite"
-      />
-    </div>
+    <MainHomeBox />
+    <MovieCard
+      v-for="movie in movies"
+      :key="movie.id"
+      :movie="movie"
+      @add-to-cart="addToCart"
+      @add-to-favorites="toggleFavorite"
+    />
+    <Loader />
   </MainHome>
 </template>
 
 <script setup>
+import store from "@/store/index";
 import Header from "@/components/Header.vue";
 import MainHome from "@/components/MainHome.vue";
 import MainHomeBox from "@/components/MainHomeBox.vue";
@@ -32,10 +31,14 @@ const addToCart = (movie) => store.dispatch("addToCart", movie);
 const toggleFavorite = (movie) => store.dispatch("toggleFavorite", movie);
 </script>
 
-<style lang="scss" scoped>
+<style scoped lang="scss">
 .main-container {
   display: flex;
-  height: 100vh;
+  height: calc(100vh - 60px);
+  width: 100vw;
+  flex-direction: column;
+  justify-content: center;
+  align-items: space-between;
   overflow: hidden;
 
   .sidebar {

@@ -9,6 +9,7 @@ export default createStore({
     cart: [],
     isLoading: false,
     purchaseStatus: null,
+    theme: "dark",
   },
 
   getters: {
@@ -51,6 +52,11 @@ export default createStore({
     },
     setPurchaseStatus(state, status) {
       state.purchaseStatus = status;
+    },
+    setTheme(state, theme) {
+      state.theme = theme;
+      document.documentElement.setAttribute("data-theme", theme);
+      localStorage.setItem("user-theme", theme);
     },
   },
 
@@ -114,6 +120,16 @@ export default createStore({
       } finally {
         commit("setLoading", false);
       }
+    },
+    initTheme({ commit }) {
+      const saved = localStorage.getItem("user-theme");
+      const prefersDark = window.matchMedia("(prefers-color-scheme: dark)").matches;
+      const theme = saved || (prefersDark ? "dark" : "light");
+      commit("setTheme", theme);
+    },
+    toggleTheme({ commit, state }) {
+      const newTheme = state.theme === "dark" ? "light" : "dark";
+      commit("setTheme", newTheme);
     },
   },
 });

@@ -1,11 +1,45 @@
+@import "./_variables";
+
+/* ==========================================================================
+   🔤 Global Base Styles
+   ========================================================================== */
+
 :root {
+  font-family: var(--font-family);
 }
 
 * {
   box-sizing: border-box;
   margin: 0;
   padding: 0;
-
-  font-family: "Arimo", sans-serif;
+  font-family: var(--font-family);
   font-optical-sizing: auto;
+
+  background-color: var(--color-bg);
+  color: var(--color-text-primary);
+}
+
+/* ==========================================================================
+   🧩 Utility Classes
+   ========================================================================== */
+
+/* Percentage indicators */
+.percent-high {
+  color: var(--percent-high);
+}
+.percent-medium {
+  color: var(--percent-medium);
+}
+.percent-low {
+  color: var(--percent-low);
+}
+
+/* Secondary text */
+.text-secondary {
+  color: var(--color-text-secondary);
+}
+
+/* Accent elements (interactive, links) */
+.accent {
+  color: var(--color-accent);
 }
