@@ -2,7 +2,7 @@
   <header class="header" ref="header">
     <div class="left">
       <router-link to="/">
-        <img src="@/assets/logo.jpg" alt="Logo da Loja de Filmes" class="logo" />
+        <img src="@/assets/logo.png" alt="Logo da Loja de Filmes" class="logo" />
       </router-link>
     </div>
 
