@@ -1,104 +1,78 @@
 <template>
-  <Header @toggle-favorites="toggleFavorites" @toggle-cart="toggleCart" />
-  <SidebarFavorites v-if="showFavorites" @close="toggleFavorites" class="sidebar favorites" />
-  <SidebarCart v-if="showCart" @close="toggleCart" @go-checkout="goCheckout" class="sidebar cart" />
-  <MainHome>
-    <MainHomeBox />
-    <MovieCard
-      v-for="movie in movies"
-      :key="movie.id"
-      :movie="movie"
-      @add-to-cart="addToCart"
-      @add-to-favorites="toggleFavorite"
-    />
-    <Loader />
-  </MainHome>
+  <div class="page-container">
+    <Header @toggle-favorites="toggleFavorites" @toggle-cart="toggleCart" />
+    <div class="main-content">
+      <HomeContent class="home-content" />
+      <SidebarFavorites v-if="showFavorites" @close="toggleFavorites" class="sidebar" />
+      <SidebarCart v-if="showCart" @close="toggleCart" @go-checkout="goCheckout" class="sidebar" />
+    </div>
+  </div>
 </template>
 
 <script setup>
-import store from "@/store/index";
 import Header from "@/components/Header.vue";
-import MainHome from "@/components/MainHome.vue";
-import MainHomeBox from "@/components/MainHomeBox.vue";
-import Loader from "@/components/Loader.vue";
-import MovieCard from "@/components/MovieCard.vue";
+import HomeContent from "@/components/HomeContent.vue";
 import SidebarFavorites from "@/components/SidebarFavorites.vue";
 import SidebarCart from "@/components/SidebarCart.vue";
 import { useHomeViewModel } from "@/viewmodels/HomeViewModel";
 
 const { showFavorites, showCart, toggleFavorites, toggleCart, goCheckout } = useHomeViewModel();
-const addToCart = (movie) => store.dispatch("addToCart", movie);
-const toggleFavorite = (movie) => store.dispatch("toggleFavorite", movie);
 </script>
 
 <style scoped lang="scss">
-.main-container {
+.page-container {
   display: flex;
-  height: calc(100vh - 60px);
-  width: 100vw;
   flex-direction: column;
-  justify-content: center;
-  align-items: space-between;
+  height: 100vh;
+  width: 100%;
+  background-color: var(--color-bg);
+  color: var(--color-text-primary);
+}
+
+.main-content {
+  display: flex;
+  flex: 1;
   overflow: hidden;
+}
 
-  .sidebar {
-    width: 300px;
-    background: #1f1f1f;
-    color: white;
-    overflow-y: auto;
-    transition: transform 0.3s ease;
-    position: relative;
-    z-index: 10;
+.sidebar {
+  width: 300px;
+  background-color: var(--color-base);
+  color: var(--color-text-primary);
+  padding: 1.5rem;
+  overflow-y: auto;
+}
 
-    &.favorites {
-      order: 1;
-      transform: translateX(-100%);
-    }
+.main-content > :not(.sidebar) {
+  flex: 1;
+  overflow-y: auto;
+}
 
-    &.cart {
-      order: 3;
-      transform: translateX(100%);
-    }
-  }
+.home-content {
+  overflow-y: auto;
+  scrollbar-width: thin;
+  scrollbar-color: var(--color-accent) var(--color-base);
+}
 
-  &.sidebar-open {
-    .favorites,
-    .cart {
-      transform: translateX(0);
-    }
-  }
+.home-content::-webkit-scrollbar {
+  width: 8px;
+}
 
-  > *:nth-child(2) {
-    flex: 1;
-    order: 2;
-    overflow-y: auto;
-  }
+.home-content::-webkit-scrollbar-track {
+  background: var(--color-base);
+  border-radius: 4px;
+}
 
-  @media (max-width: 768px) {
-    flex-direction: column;
+.home-content::-webkit-scrollbar-thumb {
+  background-color: var(--color-accent);
+  border-radius: 8px;
+  border: 2px solid var(--color-base);
+}
 
-    .sidebar {
-      width: 100%;
-      height: 50vh;
-      transform: translateY(100%);
-      position: fixed;
-      bottom: 0;
-      left: 0;
-      border-radius: 12px 12px 0 0;
-    }
+.home-content::-webkit-scrollbar-thumb:hover {
+  background-color: var(--color-primary);
+}
 
-    &.sidebar-open {
-      .favorites,
-      .cart {
-        transform: translateY(0);
-      }
-    }
-
-    > *:nth-child(2) {
-      order: 1;
-      height: 100%;
-      overflow-y: auto;
-    }
-  }
+@media (max-width: 768px) {
 }
 </style>

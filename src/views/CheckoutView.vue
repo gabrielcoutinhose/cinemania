@@ -1,61 +1,97 @@
 <template>
-  <div class="checkout-wrapper">
+  <div class="page-container">
     <Header @toggle-favorites="toggleFavorites" @toggle-cart="toggleCart" />
-    <SidebarFavorites v-if="showFavorites" @close="toggleFavorites" />
-    <SidebarCart v-show="showCart" @close="toggleCart" class="sidebar cart" />
-    <MainCheckoutBox>
-      <h1 class="page-title">Finalizar Compra</h1>
-      <div class="checkout-content">
-        <Form @submit-success="handleSuccess" />
-        <CheckoutCard />
-      </div>
-    </MainCheckoutBox>
-    <SuccessModal :show="showModal" @close="showModal = false" autoClose />
+    <div class="main-content">
+      <MainCheckoutBox class="checkout-content" />
+      <SidebarFavorites v-if="showFavorites" @close="toggleFavorites" class="sidebar" />
+      <SidebarCart v-if="showCart" @close="toggleCart" class="sidebar" />
+    </div>
   </div>
 </template>
 
 <script setup>
-import { ref } from "vue";
 import Header from "@/components/Header.vue";
-import MainCheckoutBox from "@/components/MainCheckoutBox.vue";
+import MainCheckoutBox from "@/components/CheckoutContent.vue";
 import SidebarFavorites from "@/components/SidebarFavorites.vue";
 import SidebarCart from "@/components/SidebarCart.vue";
-import Form from "@/components/Form.vue";
-import CheckoutCard from "@/components/CheckoutCard.vue";
-import SuccessModal from "@/components/SuccessModal.vue";
 import { useHomeViewModel } from "@/viewmodels/HomeViewModel";
 
 const { showFavorites, showCart, toggleFavorites, toggleCart } = useHomeViewModel();
-const showModal = ref(false);
-const handleSuccess = () => (showModal.value = true);
 </script>
 
-<style scoped>
-.checkout-wrapper {
-  min-height: 100vh;
-  background-color: #f9fafb;
+<style scoped lang="scss">
+.page-container {
   display: flex;
   flex-direction: column;
+  height: 100vh;
+  width: 100%;
+  background-color: var(--color-bg);
+  color: var(--color-text-primary);
 }
 
-.page-title {
-  font-size: 2rem;
-  font-weight: bold;
-  margin-bottom: 2rem;
-  text-align: center;
+.main-content {
+  display: flex;
+  flex: 1;
+  overflow: hidden;
+}
+
+.sidebar {
+  min-width: 0;
+  max-width: 100vw;
+  overflow-x: hidden;
+  width: 300px;
+  background-color: var(--color-base);
+  color: var(--color-text-primary);
+  padding: 1.5rem;
+  overflow-y: auto;
+}
+
+.main-content > :not(.sidebar) {
+  flex: 1;
+  overflow-y: auto;
 }
 
 .checkout-content {
-  display: flex;
-  flex-direction: row;
-  gap: 2rem;
-  justify-content: space-between;
-  flex-wrap: wrap;
+  overflow-y: auto;
+  scrollbar-width: thin;
+  scrollbar-color: var(--color-accent) var(--color-base);
+}
+
+.checkout-content::-webkit-scrollbar {
+  width: 8px;
+}
+
+.checkout-content::-webkit-scrollbar-track {
+  background: var(--color-base);
+  border-radius: 4px;
+}
+
+.checkout-content::-webkit-scrollbar-thumb {
+  background-color: var(--color-accent);
+  border-radius: 8px;
+  border: 2px solid var(--color-base);
+}
+
+.checkout-content::-webkit-scrollbar-thumb:hover {
+  background-color: var(--color-primary);
+}
+
+.page-container,
+.main-content,
+.checkout-content {
+  max-width: 100vw;
+  overflow-x: hidden;
 }
 
 @media (max-width: 768px) {
-  .checkout-content {
+  .main-content {
     flex-direction: column;
+  }
+
+  .sidebar {
+    width: 100%;
+    max-width: 100vw;
+    box-sizing: border-box;
   }
 }
 </style>

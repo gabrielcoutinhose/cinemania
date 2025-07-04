@@ -2,10 +2,10 @@
   <aside class="sidebar">
     <h2>Carrinho</h2>
 
-    <CartItemList :items="cart" :showPrice="true" @remove="removeFromCart" />
+    <CartTable :items="cart" @remove="removeFromCart" />
 
     <button v-if="cart.length" class="checkout" @click="$emit('go-checkout')">
-      Finalizar Compra
+      Finalizar
     </button>
 
     <button class="close" @click="$emit('close')">Fechar</button>
@@ -15,7 +15,7 @@
 <script setup>
 import { computed } from "vue";
 import { useStore } from "vuex";
-import CartItemList from "./CartItemList.vue";
+import CartTable from "./CartTable.vue";
 
 const store = useStore();
 const cart = computed(() => store.state.cart);
@@ -26,15 +26,10 @@ const removeFromCart = (id) => store.commit("removeFromCart", id);
 <style lang="scss" scoped>
 .sidebar {
   width: 300px;
-  background: #1e1e1e;
-  color: white;
-  padding: 1.5rem;
-  position: fixed;
-  right: 0;
-  top: 0;
   height: 100%;
-  overflow-y: auto;
-  z-index: 1001;
+  background: var(--color-base);
+  color: var(--color-text-primary);
+  padding: 1.5rem;
   display: flex;
   flex-direction: column;
 

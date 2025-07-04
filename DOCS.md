@@ -90,7 +90,7 @@ This is an **MVP (Minimum Viable Product)** for a **virtual movie store**, focus
 * **ViewModel**:
 
   * Business/UI logic handled in `<script setup>`
-  * Shared logic organized in `/composables/`
+  * Shared logic organized in `/composables/` | `/viewmodels/`
 
 ---
 
@@ -101,7 +101,7 @@ This is an **MVP (Minimum Viable Product)** for a **virtual movie store**, focus
 * [**TMDb API**](https://developer.themoviedb.org/docs/getting-started)
   → Popular movies, search, metadata
 
-### ➕ Optional Integration
+### ➕ Extra Integration
 
 * [**ViaFacil (ViaCEP) API**](https://viacep.com.br/)
   → Used to auto-complete address fields on checkout

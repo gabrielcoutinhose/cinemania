@@ -72,7 +72,6 @@ export default createStore({
         commit("setLoading", false);
       }
     },
-
     async searchMovies({ commit }, query) {
       commit("setLoading", true);
       try {
@@ -91,7 +90,6 @@ export default createStore({
         commit("setLoading", false);
       }
     },
-
     toggleFavorite({ commit, getters }, movie) {
       if (!movie?.id) return;
       if (getters.isFavorite(movie.id)) {
@@ -108,7 +106,6 @@ export default createStore({
         commit("addToCart", movie);
       }
     },
-
     async finalizePurchase({ commit }) {
       commit("setPurchaseStatus", null);
       commit("setLoading", true);

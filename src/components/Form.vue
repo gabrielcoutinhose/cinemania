@@ -25,8 +25,10 @@
       </span>
     </div>
 
-    <button @click="searchCEP" type="button" class="search-cep">Buscar CEP</button>
-    <button type="submit" class="submit-button">Finalizar Compra</button>
+    <div class="form-buttons">
+      <button @click="searchCEP" type="button" class="search-cep">Buscar CEP</button>
+      <button type="submit" class="submit-button">Finalizar Compra</button>
+    </div>
 
     <SuccessModal :show="showModal" @close="handleModalClose" autoClose />
   </form>
@@ -89,18 +91,28 @@ function handleModalClose() {
 
 <style scoped>
 .checkout-form {
-  display: flex;
-  flex-direction: column;
-  gap: 1.5rem;
+  width: 100%;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1rem 2rem;
   background: #fff;
   padding: 2rem;
   border-radius: 12px;
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
 }
 
-.form-field {
+.checkout-form .form-field {
   display: flex;
   flex-direction: column;
+  grid-column: span 2;
+}
+
+.checkout-form .form-field.full-width {
+  grid-column: span 2;
+}
+
+.submit-button {
+  grid-column: span 2;
 }
 
 .form-field label {
@@ -150,4 +162,34 @@ function handleModalClose() {
 .submit-button:hover {
   background-color: #16a34a;
 }
+
+.form-buttons {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+  grid-column: span 2;
+  width: 100%;
+}
+
+.search-cep,
+.submit-button {
+  flex: 1;
+  width: 100%;
+}
+
+@media (max-width: 768px) {
+  .checkout-form {
+    display: flex;
+    flex-direction: column;
+    }
+  }
+
+  .form-buttons {
+    flex-direction: row;
+  }
+
+  .search-cep,
+  .submit-button {
+    width: auto;
+  }
 </style>

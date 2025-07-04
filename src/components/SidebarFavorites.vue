@@ -25,15 +25,10 @@ const toggleFavorite = (movie) => store.dispatch("toggleFavorite", movie);
 <style lang="scss" scoped>
 .sidebar {
   width: 300px;
+  height: 100%;
   background: #1e1e1e;
   color: white;
   padding: 1.5rem;
-  position: fixed;
-  right: 0;
-  top: 0;
-  height: 100%;
-  overflow-y: auto;
-  z-index: 1001;
   display: flex;
   flex-direction: column;
 
@@ -44,6 +39,7 @@ const toggleFavorite = (movie) => store.dispatch("toggleFavorite", movie);
   ul {
     list-style: none;
     padding: 0;
+    margin: 0;
     flex: 1;
     overflow-y: auto;
 
@@ -54,31 +50,38 @@ const toggleFavorite = (movie) => store.dispatch("toggleFavorite", movie);
       margin-bottom: 1rem;
 
       button {
-        background: transparent;
-        border: none;
-        color: #f44336;
+        background-color: transparent;
+        color: var(--color-text-primary);
         cursor: pointer;
         font-size: 1.2rem;
         padding: 0.2rem 0.5rem;
+        border: none;
         border-radius: 4px;
         transition: background 0.2s;
 
         &:hover {
-          background: rgba(244, 67, 54, 0.2);
+          background-color: var(--color-accent);
+          opacity: 0.8;
         }
       }
     }
   }
 
   .close {
-    margin-top: 1rem;
-    background: #444;
-    border: none;
-    color: white;
+    background-color: var(--color-primary);
+    color: var(--color-text-primary);
+    margin-top: auto;
     padding: 0.5rem 1rem;
     cursor: pointer;
+    border: none;
     border-radius: 4px;
     width: 100%;
+    transition: background 0.2s;
+
+    &:hover {
+      background-color: var(--color-accent);
+      opacity: 0.6;
+    }
   }
 
   @media (max-width: 768px) {
