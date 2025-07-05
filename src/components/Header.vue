@@ -21,9 +21,9 @@
       </button>
     </form>
 
-    <ThemeToggle />
+    <ThemeToggle class="theme-toggle"/>
 
-    <div class="icons">
+    <div class="sidebar-icons">
       <button @click="$emit('toggle-favorites')" aria-label="Abrir favoritos">
         <font-awesome-icon icon="heart" />
         <span v-if="favoritesCount > 0" class="badge">{{ favoritesCount }}</span>
@@ -99,41 +99,52 @@ onUnmounted(() => {
 .header {
   height: 60px;
   width: 100%;
+  max-width: 1200px;
   display: flex;
+  flex-direction: row;
   align-items: center;
   justify-content: space-between;
   padding: 1rem 2rem;
-  background: #121212;
-  color: white;
+  background: var(--color-base);
+  color: var(--color-text-primary);
+  border: none;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
 
   .left .logo {
     height: 32px;
-    
-    router-link {
-    text-decoration: none;
-    }
+    width: 32px;
+    margin-top: 3px;
+    margin-right: calc(1rem - 8px);
   }
 
   .search {
     flex: 1;
-    margin: 0 2rem;
+    margin: 0 1rem;
     display: flex;
 
     .search-input {
+      color: var(--color-text-primary);
+      background: var(--color-aux);
       flex: 1;
       padding: 0.5rem 1rem;
       border: none;
       border-radius: 4px 0 0 4px;
       font-size: 1rem;
+      
+      &:focus {
+        border: none;
+        outline-color: var(--color-accent);
+        outline-width: 0.25px;
+      }
     }
 
     .search-btn {
-      background: #2196f3;
+      margin-left: 2px;
+      background: var(--color-aux);
       border: none;
-      color: white;
-      padding: 0 1rem;
       border-radius: 0 4px 4px 0;
+      color: var(--color-text-primary);
+      padding: 0 1rem;
       cursor: pointer;
       display: flex;
       align-items: center;
@@ -142,14 +153,22 @@ onUnmounted(() => {
         width: 1rem;
         height: 1rem;
       }
+      &:hover {
+        opacity: 0.8;
+      }
     }
   }
 
-  .icons {
+  .theme-toggle {
+    margin-right: calc(1rem - 5px);
+  }
+
+  .sidebar-icons {
     display: flex;
     gap: 1rem;
 
     button {
+      margin-top: 3px;
       background: none;
       border: none;
       color: white;
