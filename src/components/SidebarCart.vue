@@ -40,7 +40,7 @@ const removeFromCart = (id) => store.commit("removeFromCart", id);
   .checkout {
     background-color: var(--color-aux);
     color: var(--color-text-primary);
-    margin-top: auto;
+    margin-top: 0.5rem;
     border: none;
     cursor: pointer;
     border-radius: 4px;
@@ -56,13 +56,17 @@ const removeFromCart = (id) => store.commit("removeFromCart", id);
 
   .close {
     background-color: var(--color-aux);
-    color: var(--color-text-primary);  
-    margin-top: auto;    
+    color: var(--color-text-primary);
+    margin-top: 0.5rem;
     padding: 0.7rem 1rem;
     cursor: pointer;
     border: none;
     border-radius: 4px;
     width: 100%;
+
+    &:hover {
+      opacity: 0.8;
+    }
   }
 
   @media (max-width: 768px) {
