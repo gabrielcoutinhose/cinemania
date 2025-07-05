@@ -20,6 +20,12 @@ const { showFavorites, showCart, toggleFavorites, toggleCart } = useHomeViewMode
 </script>
 
 <style scoped lang="scss">
+
+.header {
+  width: 100%;
+  max-width: none;
+}
+
 .page-container {
   display: flex;
   flex-direction: column;

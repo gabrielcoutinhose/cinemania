@@ -20,6 +20,11 @@ const { showFavorites, showCart, toggleFavorites, toggleCart, goCheckout } = use
 </script>
 
 <style scoped lang="scss">
+.header {
+  width: 100%;
+  max-width: none;
+}
+
 .page-container {
   display: flex;
   flex-direction: column;

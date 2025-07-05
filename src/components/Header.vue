@@ -45,7 +45,7 @@ const store = useStore();
 const header = ref(null);
 const searchInput = ref(null);
 const searchQuery = ref("");
-const showSearchInput = ref(window.innerWidth > 600);
+const showSearchInput = ref(window.innerWidth > 768);
 
 const favoritesCount = computed(() => store.state.favorites.length);
 const cartCount = computed(() => store.state.cart.length);
@@ -54,7 +54,7 @@ const handleSearch = () => {
   const query = searchQuery.value.trim();
   if (query) {
     store.dispatch("searchMovies", query);
-    if (window.innerWidth <= 600) {
+    if (window.innerWidth <= 768) {
       showSearchInput.value = false;
       searchQuery.value = "";
     }
@@ -64,7 +64,7 @@ const handleSearch = () => {
 };
 
 const toggleSearchInput = () => {
-  if (window.innerWidth <= 600) {
+  if (window.innerWidth <= 768) {
     showSearchInput.value = !showSearchInput.value;
     if (showSearchInput.value) {
       nextTick(() => searchInput.value?.focus());
@@ -77,7 +77,7 @@ const toggleSearchInput = () => {
 const handleClickOutside = (event) => {
   if (
     showSearchInput.value &&
-    window.innerWidth <= 600 &&
+    window.innerWidth <= 768 &&
     header.value &&
     !header.value.contains(event.target)
   ) {
@@ -99,7 +99,7 @@ onUnmounted(() => {
 .header {
   height: 60px;
   width: 100%;
-  max-width: 1200px;
+  max-width: 100%;
   display: flex;
   flex-direction: row;
   align-items: center;
@@ -161,6 +161,7 @@ onUnmounted(() => {
 
   .theme-toggle {
     margin-right: calc(1rem - 5px);
+    margin-top: - 4px;
   }
 
   .sidebar-icons {
@@ -168,10 +169,9 @@ onUnmounted(() => {
     gap: 1rem;
 
     button {
-      margin-top: 3px;
       background: none;
       border: none;
-      color: white;
+      color: var(--color-text-primary);
       font-size: 1.5rem;
       cursor: pointer;
       transition:
@@ -180,13 +180,13 @@ onUnmounted(() => {
 
       &:hover {
         transform: scale(1.2);
-        color: #f44336;
+        color: var(--color-accent);
       }
     }
 
     .badge {
-      background: red;
-      color: white;
+      background: var(--color-aux);
+      color: var(--color-text-primary);
       border-radius: 50%;
       font-size: 0.75rem;
       padding: 0.25em 0.5em;
@@ -194,7 +194,7 @@ onUnmounted(() => {
     }
   }
 
-  @media (max-width: 600px) {
+  @media (max-width: 768px) {
     padding: 0.5rem 1rem;
 
     .search {
