@@ -27,7 +27,7 @@
 
     <div class="form-buttons">
       <button @click="searchCEP" type="button" class="search-cep">Buscar CEP</button>
-      <button type="submit" class="submit-button">Finalizar Compra</button>
+      <button type="submit" class="submit-button">Finalizar</button>
     </div>
 
     <SuccessModal :show="showModal" @close="handleModalClose" autoClose />
@@ -181,15 +181,15 @@ function handleModalClose() {
   .checkout-form {
     display: flex;
     flex-direction: column;
-    }
   }
+}
 
-  .form-buttons {
-    flex-direction: row;
-  }
+.form-buttons {
+  flex-direction: row;
+}
 
-  .search-cep,
-  .submit-button {
-    width: auto;
-  }
+.search-cep,
+.submit-button {
+  width: auto;
+}
 </style>

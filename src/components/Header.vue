@@ -21,7 +21,7 @@
       </button>
     </form>
 
-    <ThemeToggle class="theme-toggle"/>
+    <ThemeToggle class="theme-toggle" />
 
     <div class="sidebar-icons">
       <button @click="$emit('toggle-favorites')" aria-label="Abrir favoritos">
@@ -105,7 +105,7 @@ onUnmounted(() => {
   align-items: center;
   justify-content: space-between;
   padding: 1rem 2rem;
-  background: var(--color-base);
+  background-color: var(--color-base);
   color: var(--color-text-primary);
   border: none;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
@@ -130,7 +130,7 @@ onUnmounted(() => {
       border: none;
       border-radius: 4px 0 0 4px;
       font-size: 1rem;
-      
+
       &:focus {
         border: none;
         outline-color: var(--color-accent);
@@ -161,7 +161,7 @@ onUnmounted(() => {
 
   .theme-toggle {
     margin-right: calc(1rem - 5px);
-    margin-top: - 4px;
+    margin-top: -4px;
   }
 
   .sidebar-icons {

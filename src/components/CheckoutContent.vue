@@ -1,15 +1,15 @@
 <template>
-    <section class="checkout-layout">
-      <Loader v-if="isLoading" />
-      <div v-else>
-        <h1 class="page-title">Finalizar</h1>
-        <div :class="['checkout-grid', { 'column-mode': showSidebar } ]">
-          <CheckoutCard />
-          <Form @submit-success="handleSuccess" />
-        </div>
+  <section class="checkout-layout">
+    <Loader v-if="isLoading" />
+    <div v-else>
+      <h1 class="page-title">Finalizar</h1>
+      <div :class="['checkout-grid', { 'column-mode': showSidebar }]">
+        <CheckoutCard />
+        <Form @submit-success="handleSuccess" />
       </div>
-      <SuccessModal :show="showModal" @close="showModal = false" autoClose />
-    </section>
+    </div>
+    <SuccessModal :show="showModal" @close="showModal = false" autoClose />
+  </section>
 </template>
 
 <script setup>
@@ -65,7 +65,7 @@ const handleSuccess = () => (showModal.value = true);
 
   @media (min-width: 768px) {
     flex-direction: row;
-    
+
     & > * {
       flex: 1 1 48%;
     }
@@ -79,5 +79,4 @@ const handleSuccess = () => (showModal.value = true);
     flex: 1 1 100%;
   }
 }
-
 </style>

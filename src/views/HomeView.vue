@@ -40,14 +40,6 @@ const { showFavorites, showCart, toggleFavorites, toggleCart, goCheckout } = use
   overflow: hidden;
 }
 
-.sidebar {
-  width: 300px;
-  background-color: var(--color-base);
-  color: var(--color-text-primary);
-  padding: 1.5rem;
-  overflow-y: auto;
-}
-
 .main-content > :not(.sidebar) {
   flex: 1;
   overflow-y: auto;

@@ -4,9 +4,7 @@
 
     <CartTable :items="cart" @remove="removeFromCart" />
 
-    <button v-if="cart.length" class="checkout" @click="$emit('go-checkout')">
-      Finalizar
-    </button>
+    <button v-if="cart.length" class="checkout" @click="$emit('go-checkout')">Finalizar</button>
 
     <button class="close" @click="$emit('close')">Fechar</button>
   </aside>
@@ -27,40 +25,42 @@ const removeFromCart = (id) => store.commit("removeFromCart", id);
 .sidebar {
   width: 300px;
   height: 100%;
-  background: var(--color-base);
+  background-color: var(--color-primary);
   color: var(--color-text-primary);
-  padding: 1.5rem;
+  padding: 1rem;
   display: flex;
   flex-direction: column;
+  overflow-y: auto;
 
   h2 {
     margin-bottom: 1rem;
+    text-align: center;
   }
 
   .checkout {
-    margin-top: 1rem;
-    background: #4caf50;
+    background-color: var(--color-aux);
+    color: var(--color-text-primary);
+    margin-top: auto;
     border: none;
-    color: white;
-    padding: 0.75rem 1rem;
     cursor: pointer;
     border-radius: 4px;
+    padding: 0.7rem 1rem;
     width: 100%;
     font-weight: bold;
     transition: background 0.3s;
 
     &:hover {
-      background: #45a049;
+      opacity: 0.8;
     }
   }
 
   .close {
-    margin-top: 0.5rem;
-    background: #444;
-    border: none;
-    color: white;
-    padding: 0.5rem 1rem;
+    background-color: var(--color-aux);
+    color: var(--color-text-primary);  
+    margin-top: auto;    
+    padding: 0.7rem 1rem;
     cursor: pointer;
+    border: none;
     border-radius: 4px;
     width: 100%;
   }

@@ -20,7 +20,6 @@ const { showFavorites, showCart, toggleFavorites, toggleCart } = useHomeViewMode
 </script>
 
 <style scoped lang="scss">
-
 .header {
   width: 100%;
   max-width: none;
@@ -39,17 +38,6 @@ const { showFavorites, showCart, toggleFavorites, toggleCart } = useHomeViewMode
   display: flex;
   flex: 1;
   overflow: hidden;
-}
-
-.sidebar {
-  min-width: 0;
-  max-width: 100vw;
-  overflow-x: hidden;
-  width: 300px;
-  background-color: var(--color-base);
-  color: var(--color-text-primary);
-  padding: 1.5rem;
-  overflow-y: auto;
 }
 
 .main-content > :not(.sidebar) {

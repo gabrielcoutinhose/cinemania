@@ -2,7 +2,7 @@
   <div class="cart-summary">
     <h2>Resumo do Carrinho</h2>
 
-    <CartTable :items="cart" @remove="removeItem" />
+    <CartTable :items="cart" @remove="removeItem" class="cart-table"/>
 
     <p class="total">
       Total: <strong>R$ {{ total.toFixed(2) }}</strong>
@@ -19,7 +19,7 @@ const store = useStore();
 const cart = computed(() => store.state.cart);
 
 const total = computed(() =>
-  cart.value.reduce((sum, item) => sum + item.price * (item.quantity || 1), 0)
+  cart.value.reduce((sum, item) => sum + item.price * (item.quantity || 1), 0),
 );
 
 const removeItem = (id) => store.commit("removeFromCart", id);
@@ -27,16 +27,18 @@ const removeItem = (id) => store.commit("removeFromCart", id);
 
 <style scoped>
 .cart-summary {
-  flex: 1 1 100%;
   width: 100%;
   max-width: 100%;
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 1rem 2rem;
-  background: #fff;
-  padding: 1.5rem;
+  height: auto;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-evenly;
+  align-items: center;
+  background: var(--color-base);
+  padding: 1rem;
   border-radius: 12px;
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+  overflow-x: auto;
 }
 
 .cart-summary h2 {
@@ -44,27 +46,26 @@ const removeItem = (id) => store.commit("removeFromCart", id);
   font-size: 1.3rem;
   font-weight: 600;
   margin-bottom: 1rem;
+  text-align: center;
 }
 
 .total {
   grid-column: span 2;
-  text-align: right;
+  text-align: center;
   font-size: 1.1rem;
   font-weight: bold;
-  margin-top: 1rem;
-  margin-bottom: 1.5rem;
 }
 
 .remove-btn {
   background: none;
   border: none;
-  color: #ef4444;
+  color: var(--color-text-primary);
   cursor: pointer;
   font-size: 1.1rem;
 }
 
 .remove-btn:hover {
-  color: #dc2626;
+  opacity: 0.8;
 }
 
 .finalize-btn {

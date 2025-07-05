@@ -8,24 +8,24 @@
 
 /* Dark Theme */
 [data-theme="dark"] {
-  --color-bg: #0a1647;               // darkest blue (background)
-  --color-base: #2e3961;             // base container
-  --color-primary: #535c7b;          // primary action color
-  --color-accent: #9ba1b0;           // accent (links, buttons)
-  --color-aux: #c0c4ca;              // auxiliary elements (borders, subtle bg)
+  --color-bg: #0a1647; // darkest blue (background)
+  --color-base: #2e3961; // base container
+  --color-primary: #535c7b; // primary action color
+  --color-accent: #9ba1b0; // accent (links, buttons)
+  --color-aux: #c0c4ca; // auxiliary elements (borders, subtle bg)
 
-  --color-text-primary: #e4e7e4;     // soft white for text
-  --color-text-secondary: #9ba1b0;   // subtle secondary text
+  --color-text-primary: #e4e7e4; // soft white for text
+  --color-text-secondary: #9ba1b0; // subtle secondary text
 }
 
 /* Light Theme */
 [data-theme="light"] {
-  --color-bg: #e4e7e4;               // soft light background
-  --color-base: #c0c4ca;             // content base
-  --color-primary: #535c7b;          // primary
-  --color-accent: #2e3961;           // accent (deep blue)
-  --color-aux: #9ba1b0;              // auxiliary
+  --color-bg: #e4e7e4; // soft light background
+  --color-base: #c0c4ca; // content base
+  --color-primary: #535c7b; // primary
+  --color-accent: #2e3961; // accent (deep blue)
+  --color-aux: #9ba1b0; // auxiliary
 
-  --color-text-primary: #0a1647;     // soft dark navy text
-  --color-text-secondary: #535c7b;   // subtle secondary
+  --color-text-primary: #0a1647; // soft dark navy text
+  --color-text-secondary: #535c7b; // subtle secondary
 }

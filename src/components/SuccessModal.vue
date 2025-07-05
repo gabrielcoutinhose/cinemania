@@ -1,7 +1,7 @@
 <template>
   <div v-if="show">
     <transition name="fade-slide" @after-leave="$emit('closed')">
-      <div class="modal-overlay" @click.self="close">
+      <div class="modal-overlay" v-if="true" @click.self="close">
         <div class="modal-content">
           <h2>Compra realizada com sucesso!</h2>
           <p><slot>Obrigado por comprar conosco. Seu pedido está sendo processado.</slot></p>
@@ -60,7 +60,7 @@ onBeforeUnmount(cleanup);
 .modal-overlay {
   position: fixed;
   inset: 0;
-  background: rgba(0, 0, 0, 0.6);
+  background: var(--color-primary);
   display: flex;
   align-items: center;
   justify-content: center;
@@ -68,7 +68,7 @@ onBeforeUnmount(cleanup);
 }
 
 .modal-content {
-  background-color: #fff;
+  background-color: var(--color-text-primary);
   padding: 2rem;
   border-radius: 12px;
   max-width: 400px;
@@ -80,8 +80,8 @@ onBeforeUnmount(cleanup);
 
 .close-button {
   margin-top: 1rem;
-  background-color: #22c55e;
-  color: white;
+  background-color: var(--color-accent);
+  color: var(--color-text-primary);
   border: none;
   padding: 0.6rem 1.2rem;
   border-radius: 8px;
@@ -90,7 +90,7 @@ onBeforeUnmount(cleanup);
 }
 
 .close-button:hover {
-  background-color: #16a34a;
+  opacity: 0.8;
 }
 
 .fade-slide-enter-active,

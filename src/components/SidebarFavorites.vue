@@ -26,14 +26,15 @@ const toggleFavorite = (movie) => store.dispatch("toggleFavorite", movie);
 .sidebar {
   width: 300px;
   height: 100%;
-  background: #1e1e1e;
-  color: white;
-  padding: 1.5rem;
+  background-color: var(--color-primary);
+  color: var(--color-text-primary);
+  padding: 1rem;
   display: flex;
   flex-direction: column;
 
   h2 {
     margin-bottom: 1rem;
+    text-align: center;
   }
 
   ul {
@@ -68,10 +69,10 @@ const toggleFavorite = (movie) => store.dispatch("toggleFavorite", movie);
   }
 
   .close {
-    background-color: var(--color-primary);
+    background-color: var(--color-aux);
     color: var(--color-text-primary);
     margin-top: auto;
-    padding: 0.5rem 1rem;
+    padding: 0.7rem 1rem;
     cursor: pointer;
     border: none;
     border-radius: 4px;
@@ -79,8 +80,7 @@ const toggleFavorite = (movie) => store.dispatch("toggleFavorite", movie);
     transition: background 0.2s;
 
     &:hover {
-      background-color: var(--color-accent);
-      opacity: 0.6;
+      opacity: 0.8;
     }
   }
 
